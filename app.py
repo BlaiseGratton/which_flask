@@ -30,7 +30,7 @@ def before_request():
     """Connect to the database before each request."""
     g.db = models.DATABASE
     g.db.connect()
-    #g.user = current_user
+    g.user = current_user
 
 @app.after_request
 def after_request(response):
@@ -57,6 +57,22 @@ def register():
         password = password)
     user = models.User.get(models.User.username == username)
     return jsonify({ 'username': user.username }), 201, {'Location': url_for('get_user', id = user.id, _external = True)}
+
+@app.route('/api/login', methods=['POST'])
+def login():
+    username = request.json.get('username')
+    password = request.json.get('password')
+    try:
+        user = models.User.get(models.User.username == username)
+    except models.DoesNotExist:
+        return jsonify({ 'message': 'User does not exist' }), 400
+    else:
+        if check_password_hash(user.password, password):
+            login_user(user)
+            token = g.user.generate_auth_token()
+            return jsonify({ 'token': token.decode('ascii') }), 200
+        else:
+            return jsonify({ 'message': 'Incorrect password' }), 400
 
 @app.route('/')
 def index():

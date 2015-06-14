@@ -2,6 +2,8 @@ import datetime
 
 from flask.ext.bcrypt import generate_password_hash
 from flask.ext.login import UserMixin
+from itsdangerous import (TimedJSONWebSignatureSerializer 
+                          as Serializer, BadSignature, SignatureExpired)
 from peewee import *
 
 DATABASE = SqliteDatabase('which.db', threadlocals=True)
@@ -16,6 +18,22 @@ class User(UserMixin, BaseModel):
     password = CharField(max_length=100)
     join_date = DateTimeField(default=datetime.datetime.now)
     is_admin = BooleanField(default=False)
+
+    def generate_auth_token(self, expiration = 6000):
+        s = Serializer('*lksdf##ba29sGHdI74(*^(;', expires_in = expiration)
+        return s.dumps({ 'id' : self.id })
+
+    @staticmethod
+    def verify_auth_token(token):
+        s = Serializer(app.config['*lksdf##ba29sGHdI74(*^(;'])
+        try:
+            data = s.loads(token)
+        except SignatureExpired:
+            return None
+        except BadSignature:
+            return None
+        user = User.get(User.id == data['id'])
+        return user
 
     @classmethod
     def create_user(cls, username, email, password, admin=False):
