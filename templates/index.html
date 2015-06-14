@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html ng-app="whichApp">
+<head>
+</head>
+{%raw%}
+<body ng-controller="LoginController">
+  <input type="text" placeholder="username" ng-model="user.username">
+  <input type="text" placeholder="email" ng-model="user.email">
+  <input type="text" placeholder="password" ng-model="user.password">
+  <button ng-click="registerUser()">Register</button>
+  <p ng-model="response">{{ response.username }}</p>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+  <script src="../static/js/main.js"></script>
+</body>
+{%endraw%}
+</html>
