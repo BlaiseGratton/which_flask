@@ -17,12 +17,6 @@ class User(UserMixin, BaseModel):
     join_date = DateTimeField(default=datetime.datetime.now)
     is_admin = BooleanField(default=False)
 
-    class Meta:
-        order_by = ('-join_date',)
-
-    def get_user_notes(self):
-        return Note.select().where(Note.user == self)
-
     @classmethod
     def create_user(cls, username, email, password, admin=False):
         try:
@@ -36,5 +30,5 @@ class User(UserMixin, BaseModel):
 
 def initialize():
     DATABASE.connect()
-    DATABASE.create_tables([User, Note, Category], safe=True)
+    DATABASE.create_tables([User], safe=True)
     DATABASE.close()

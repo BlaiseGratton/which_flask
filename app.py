@@ -17,7 +17,6 @@ app.secret_key = 'iwnv847*345798^^#*(vs&348agxcvifj**w9'
 
 login_manager = LoginManager()
 login_manager.init_app(app)
-login_manager.login_view = 'login'
 
 @login_manager.user_loader
 def load_user(userid):
