@@ -1,7 +1,7 @@
 'use strict';
-var app = angular.module('whichApp', []);
+var app = angular.module('whichApp', ['LocalStorageModule']);
 
-app.controller('LoginController', function($http, $scope){
+app.controller('AuthController', function($http, $scope, localStorageService){
   
   $scope.registerUser = function() {
     $http.post("/api/users", $scope.register)
@@ -13,10 +13,12 @@ app.controller('LoginController', function($http, $scope){
         console.log(err.message);
       });
   };
+
   $scope.loginUser = function() {
     $http.post("/api/login", $scope.login)
       .success(function(data){
         $scope.response = data;
+        localStorageService.set('token', data.token);
         console.log("User successfully logged in", data);
       })
       .error(function(err){
@@ -24,3 +26,25 @@ app.controller('LoginController', function($http, $scope){
       });
   };
 });
+
+app.factory('tokenInjector', function(localStorageService) {
+  var sessionInjector = {
+    request: function(config) {
+      var token = localStorageService.get('token');
+      if (token) {
+        config.headers['x-session-token'] = token;
+      }
+      return config;
+    }
+  };
+  return sessionInjector; 
+});
+
+app.config(['localStorageServiceProvider', '$httpProvider', function(localStorageServiceProvider, $httpProvider) {
+  localStorageServiceProvider
+    .setPrefix('which')
+    .setStorageType('sessionStorage')
+    .setNotify(true, true);
+  
+  $httpProvider.interceptors.push('tokenInjector');
+}]);

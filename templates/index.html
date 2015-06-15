@@ -2,21 +2,20 @@
 <html ng-app="whichApp">
 <head>
 </head>
-{%raw%}
-<body ng-controller="LoginController">
+<body ng-controller="AuthController">
+  {%raw%}
   <input type="text" placeholder="username" ng-model="register.username">
   <input type="text" placeholder="email" ng-model="register.email">
   <input type="text" placeholder="password" ng-model="register.password">
   <button ng-click="registerUser()">Register</button>
   <p ng-model="response">{{ response.username }}</p>
-
   <input type="text" placeholder="username" ng-model="login.username">
   <input type="text" placeholder="password" ng-model="login.password">
   <button ng-click="loginUser()">Login</button>
   <p ng-model="token">{{ response.token }}</p>
-
+  {%endraw%}
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+  <script src="{{ url_for('static', filename='js/angular-local-storage.min.js') }}"></script>
   <script src="../static/js/main.js"></script>
 </body>
-{%endraw%}
 </html>
