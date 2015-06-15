@@ -56,7 +56,9 @@ def register():
         email = email,
         password = password)
     user = models.User.get(models.User.username == username)
-    return jsonify({ 'username': user.username }), 201, {'Location': url_for('get_user', id = user.id, _external = True)}
+    login_user(user)
+    token = g.user.generate_auth_token()
+    return jsonify({ 'token': token.decode('ascii') }), 200
 
 @app.route('/api/login', methods=['POST'])
 def login():
