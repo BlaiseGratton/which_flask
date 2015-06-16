@@ -92,6 +92,12 @@ def login():
         else:
             return jsonify({ 'message': 'Incorrect password' }), 400
 
+@app.route('/api/logout')
+@token_required
+def logout():
+    logout_user()
+    return jsonify({ 'message': 'User successfully logged out' })
+
 @app.route('/')
 def index():
     return render_template('index.html')

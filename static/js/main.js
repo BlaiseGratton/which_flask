@@ -25,6 +25,27 @@ app.controller('AuthController', function($http, $scope, localStorageService){
         console.log(err.message);
       });
   };
+
+  $scope.getUser = function() {
+    $http.get("/get_user")
+      .success(function(data){
+        console.log(data);
+      })
+      .error(function(err){
+        console.log(err.message);
+      });
+  };
+
+  $scope.logoutUser = function() {
+    $http.get("/api/logout")
+      .success(function(data){
+        localStorageService.remove('token');
+        console.log("User successfully logged out");
+      })
+      .error(function(err){
+        console.log(err.message);
+      });
+  };
 });
 
 app.factory('tokenInjector', function(localStorageService) {
