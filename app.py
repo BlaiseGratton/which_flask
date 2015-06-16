@@ -4,6 +4,7 @@ from flask import abort, Flask, g, jsonify, request, render_template, url_for
 from flask.ext.bcrypt import check_password_hash
 from flask.ext.login import (current_user, LoginManager, login_user,
                              logout_user, login_required)
+from functools import wraps
 
 import json
 import models
@@ -17,6 +18,16 @@ app.secret_key = 'iwnv847*345798^^#*(vs&348agxcvifj**w9'
 
 login_manager = LoginManager()
 login_manager.init_app(app)
+
+def token_required(func):
+    @wraps(func)
+    def check_token():
+        try:
+            user = models.User.verify_auth_token(request.headers.get('x-session-token'))
+            return func()
+        except ValueError:
+            return abort(403)
+    return check_token
 
 @login_manager.user_loader
 def load_user(userid):
@@ -39,8 +50,13 @@ def after_request(response):
     return response
 
 @app.route('/get_user')
+@token_required
 def get_user():
-    return 0
+    try:
+        user = models.User.verify_auth_token(request.headers.get('x-session-token'))
+        return jsonify({ 'username': user.username })
+    except ValueError:
+        return jsonify({'message': 'Missing or incorrect token'}), 400
 
 @app.route('/api/users', methods=['POST'])
 def register():

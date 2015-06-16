@@ -25,15 +25,18 @@ class User(UserMixin, BaseModel):
 
     @staticmethod
     def verify_auth_token(token):
-        s = Serializer(app.config['*lksdf##ba29sGHdI74(*^(;'])
+        s = Serializer('*lksdf##ba29sGHdI74(*^(;')
         try:
             data = s.loads(token)
         except SignatureExpired:
             return None
         except BadSignature:
             return None
-        user = User.get(User.id == data['id'])
-        return user
+        try:
+            user = User.get(User.id == data['id'])
+            return user
+        except User.DoesNotExist:
+            return None
 
     @classmethod
     def create_user(cls, username, email, password, admin=False):
