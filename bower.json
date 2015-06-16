@@ -1,0 +1,19 @@
+{
+  "name": "which_flask",
+  "version": "0.0.0",
+  "homepage": "https://github.com/BlaiseGratton/which_flask",
+  "authors": [
+    "BlaiseGratton <blaisegratton@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-local-storage": "~0.2.2"
+  } 
+}
