@@ -24,9 +24,10 @@ def token_required(func):
     def check_token():
         try:
             user = models.User.verify_auth_token(request.headers.get('x-session-token'))
-            return func()
-        except ValueError:
-            return abort(403)
+        except ValueError as err:
+            print(err.args)
+            abort(403)
+        return func()
     return check_token
 
 @login_manager.user_loader

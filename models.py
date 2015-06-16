@@ -28,15 +28,17 @@ class User(UserMixin, BaseModel):
         s = Serializer('*lksdf##ba29sGHdI74(*^(;')
         try:
             data = s.loads(token)
+        except TypeError:
+            raise ValueError('Token missing')
         except SignatureExpired:
-            return None
+            raise ValueError('Token expired')
         except BadSignature:
-            return None
+            raise ValueError('Token not valid')
         try:
             user = User.get(User.id == data['id'])
             return user
         except User.DoesNotExist:
-            return None
+            raise ValueError('Token not valid')
 
     @classmethod
     def create_user(cls, username, email, password, admin=False):
