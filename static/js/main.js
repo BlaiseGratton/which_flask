@@ -6,7 +6,6 @@ app.controller('AuthController', function($http, $scope, localStorageService){
   $scope.registerUser = function() {
     $http.post("/api/users", $scope.register)
       .success(function(data){
-        $scope.response = data;
         localStorageService.set('token', data.token);
         console.log("User successfully registered", data);
       })
@@ -18,7 +17,6 @@ app.controller('AuthController', function($http, $scope, localStorageService){
   $scope.loginUser = function() {
     $http.post("/api/login", $scope.login)
       .success(function(data){
-        $scope.response = data;
         localStorageService.set('token', data.token);
         console.log("User successfully logged in", data);
       })

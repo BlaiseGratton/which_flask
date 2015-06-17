@@ -4,13 +4,17 @@
 </head>
 <body ng-controller="AuthController">
   {%raw%}
-  <input type="text" placeholder="username" ng-model="register.username">
-  <input type="text" placeholder="email" ng-model="register.email">
-  <input type="text" placeholder="password" ng-model="register.password">
-  <button ng-click="registerUser()">Register</button>
-  <input type="text" placeholder="username" ng-model="login.username">
-  <input type="text" placeholder="password" ng-model="login.password">
-  <button ng-click="loginUser()">Login</button>
+  <form>
+    <input type="text" placeholder="username" ng-model="register.username">
+    <input type="text" placeholder="email" ng-model="register.email">
+    <input type="text" placeholder="password" ng-model="register.password">
+    <button ng-click="registerUser()">Register</button>
+  </form>
+  <form>
+    <input type="text" placeholder="username" ng-model="login.username">
+    <input type="text" placeholder="password" ng-model="login.password">
+    <button ng-click="loginUser()">Login</button>
+  </form>
   <button ng-click="getUser()">Get User</button>
   <button ng-click="logoutUser()">Logout</button>
   {%endraw%}
