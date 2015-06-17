@@ -7,6 +7,7 @@ app.controller('AuthController', function($http, $scope, localStorageService){
     $http.post("/api/users", $scope.register)
       .success(function(data){
         $scope.response = data;
+        localStorageService.set('token', data.token);
         console.log("User successfully registered", data);
       })
       .error(function(err){
