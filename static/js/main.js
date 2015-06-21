@@ -1,5 +1,5 @@
 'use strict';
-var app = angular.module('whichApp', ['LocalStorageModule']);
+var app = angular.module('whichApp', ['LocalStorageModule', 'base64']);
 
 app.controller('AuthController', function($http, $scope, localStorageService){
   
@@ -26,7 +26,7 @@ app.controller('AuthController', function($http, $scope, localStorageService){
   };
 
   $scope.getUser = function() {
-    $http.get("/get_user")
+    $http.get("/api/user")
       .success(function(data){
         console.log(data);
       })
@@ -44,6 +44,44 @@ app.controller('AuthController', function($http, $scope, localStorageService){
       .error(function(err){
         console.log(err.message);
       });
+  };
+});
+
+app.controller('ImageController', function($http, $base64, $scope){
+
+  var request = {};
+  
+  function convertImgToBase64URL(url, callback, outputFormat){
+    var img = new Image();
+    img.crossOrigin = 'Anonymous';
+    img.onload = function(){
+        var canvas = document.createElement('CANVAS'),
+        ctx = canvas.getContext('2d'), dataURL;
+        canvas.height = this.height;
+        canvas.width = this.width;
+        ctx.drawImage(this, 0, 0);
+        dataURL = canvas.toDataURL(outputFormat || 'image/png');
+        request.image = dataURL;
+        callback(request);
+        canvas = null; 
+    };
+    img.src = url;
+  }
+
+  var postImage = function(request){
+    $http.post('/api/photos', request)
+      .success(function(data){
+        console.log(data);
+      })
+      .error(function(err){
+        console.log(err);
+      });
+  }
+  
+  $scope.submitImage = function(){
+    convertImgToBase64URL($scope.url, function(request){
+      postImage(request);
+    });
   };
 });
 

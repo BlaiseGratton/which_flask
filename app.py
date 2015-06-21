@@ -50,7 +50,7 @@ def after_request(response):
     g.db.close()
     return response
 
-@app.route('/get_user')
+@app.route('/api/user')
 @token_required
 def get_user():
     try:
@@ -58,6 +58,19 @@ def get_user():
         return jsonify({ 'username': user.username })
     except ValueError:
         return jsonify({'message': 'Missing or incorrect token'}), 400
+
+@app.route('/api/photos', methods=['POST'])
+@token_required
+def save_photo():
+    try:
+        user = models.User.verify_auth_token(request.headers.get('x-session-token'))
+    except ValueError:
+        pass
+    try:
+        photo = request.json.get('image')
+        return jsonify({ 'base64_photo': photo })
+    except ValueError:
+        return jsonify({ 'message': 'Saving photo failed' })
 
 @app.route('/api/users', methods=['POST'])
 def register():

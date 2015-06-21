@@ -2,24 +2,34 @@
 <html ng-app="whichApp">
 <head>
 </head>
-<body ng-controller="AuthController">
+<body>
   {%raw%}
-  <form>
-    <input type="text" placeholder="username" ng-model="register.username">
-    <input type="text" placeholder="email" ng-model="register.email">
-    <input type="text" placeholder="password" ng-model="register.password">
-    <button ng-click="registerUser()">Register</button>
-  </form>
-  <form>
-    <input type="text" placeholder="username" ng-model="login.username">
-    <input type="text" placeholder="password" ng-model="login.password">
-    <button ng-click="loginUser()">Login</button>
-  </form>
-  <button ng-click="getUser()">Get User</button>
-  <button ng-click="logoutUser()">Logout</button>
+  <div ng-controller="AuthController">
+    <form>
+      <input type="text" placeholder="username" ng-model="register.username">
+      <input type="text" placeholder="email" ng-model="register.email">
+      <input type="text" placeholder="password" ng-model="register.password">
+      <button ng-click="registerUser()">Register</button>
+    </form>
+    <form>
+      <input type="text" placeholder="username" ng-model="login.username">
+      <input type="text" placeholder="password" ng-model="login.password">
+      <button ng-click="loginUser()">Login</button>
+    </form>
+    <button ng-click="getUser()">Get User</button>
+    <button ng-click="logoutUser()">Logout</button>
+  </div>
+  <div ng-controller="ImageController">
+    <img id="image" ng-src="{{ url }}">
+    <label>URL</label>
+    <input type="text" ng-model="url">
+    <button ng-click="submitImage()">Submit Image</button>
+    <img ng-
+  </div>
   {%endraw%}
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
   <script src="{{ url_for('static', filename='bower_components/angular-local-storage/dist/angular-local-storage.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='bower_components/angular-base64/angular-base64.min.js') }}"></script>
   <script src="../static/js/main.js"></script>
 </body>
 </html>
