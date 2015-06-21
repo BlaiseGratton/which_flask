@@ -62,7 +62,7 @@ def get_user():
 
 @app.route('/api/photos', methods=['GET', 'POST'])
 @token_required
-def save_photo():
+def photos():
     try:
         user = models.User.verify_auth_token(request.headers.get('x-session-token'))
     except ValueError:

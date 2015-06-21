@@ -88,6 +88,7 @@ app.controller('ImageController', function($http, $base64, $scope){
     $http.get('/api/photos')
       .success(function(data){
         console.log(data);
+        $scope.images = data.photos;
       })
       .error(function(err){
         console.log(err.message);
