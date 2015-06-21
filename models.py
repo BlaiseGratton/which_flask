@@ -23,6 +23,10 @@ class User(UserMixin, BaseModel):
         s = Serializer('*lksdf##ba29sGHdI74(*^(;', expires_in = expiration)
         return s.dumps({ 'id' : self.id })
 
+    def get_user_photos(self):
+        return Photo.select().where(Photo.user == self)
+
+
     @staticmethod
     def verify_auth_token(token):
         s = Serializer('*lksdf##ba29sGHdI74(*^(;')
@@ -51,7 +55,24 @@ class User(UserMixin, BaseModel):
         except IntegrityError:
             raise ValueError("User already exists")
 
+class Photo(BaseModel):
+    user = ForeignKeyField(
+        rel_model = User,
+        related_name = 'photos'
+    )
+    base64_string = TextField()
+    post_date = DateTimeField(default=datetime.datetime.now)
+
+    @property
+    def serialize(self):
+        return {
+            'id': self.id,
+            'user': self.user.id,
+            'base64_string': self.base64_string,
+            'post_date': self.post_date
+        }
+
 def initialize():
     DATABASE.connect()
-    DATABASE.create_tables([User], safe=True)
+    DATABASE.create_tables([User, Photo], safe=True)
     DATABASE.close()

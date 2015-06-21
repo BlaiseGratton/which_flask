@@ -9,6 +9,7 @@ from functools import wraps
 import json
 import models
 
+
 DEBUG = True
 PORT = 8000
 HOST = '0.0.0.0'
@@ -57,20 +58,31 @@ def get_user():
         user = models.User.verify_auth_token(request.headers.get('x-session-token'))
         return jsonify({ 'username': user.username })
     except ValueError:
-        return jsonify({'message': 'Missing or incorrect token'}), 400
+        return jsonify({ 'message': 'Missing or incorrect token' }), 400
 
-@app.route('/api/photos', methods=['POST'])
+@app.route('/api/photos', methods=['GET', 'POST'])
 @token_required
 def save_photo():
     try:
         user = models.User.verify_auth_token(request.headers.get('x-session-token'))
     except ValueError:
-        pass
-    try:
-        photo = request.json.get('image')
-        return jsonify({ 'base64_photo': photo })
-    except ValueError:
-        return jsonify({ 'message': 'Saving photo failed' })
+        abort(403)
+    if request.method == 'POST':
+        try:
+            photo = request.json.get('image')
+            models.Photo.create(
+                user = user,
+                base64_string = photo
+            )
+            return jsonify({ 'base64_photo': photo }), 200
+        except ValueError:
+            return jsonify({ 'message': 'Saving photo failed' }), 400
+    if request.method == 'GET':
+        try:
+            photos = models.Photo.select().where(models.Photo.user == user.id)
+            return jsonify(photos=[photo.serialize for photo in photos])
+        except ValueError:
+            return jsonify({ 'message': 'No photos to return' }), 400
 
 @app.route('/api/users', methods=['POST'])
 def register():

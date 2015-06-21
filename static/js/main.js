@@ -83,6 +83,16 @@ app.controller('ImageController', function($http, $base64, $scope){
       postImage(request);
     });
   };
+
+  $scope.getImages = function(){
+    $http.get('/api/photos')
+      .success(function(data){
+        console.log(data);
+      })
+      .error(function(err){
+        console.log(err.message);
+      });
+  };
 });
 
 app.factory('tokenInjector', function(localStorageService) {
