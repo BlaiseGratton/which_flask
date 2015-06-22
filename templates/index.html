@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html ng-app="whichApp">
 <head>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles/main.css')  }}">
 </head>
 <body>
   {%raw%}
@@ -20,14 +21,14 @@
     <button ng-click="logoutUser()">Logout</button>
   </div>
   <div ng-controller="ImageController">
-    <img id="image" ng-src="{{ url }}">
+    <img id="image" ng-src="{{ url }}" class="user-photo">
     <label>URL</label>
     <input type="text" ng-model="url">
     <button ng-click="submitImage()">Submit Image</button>
     <button ng-click="getImages()">Get Images</button>
     <ul>
       <li ng-repeat="image in images">
-        <img ng-src="{{ image.base64_string }}">
+        <img ng-src="{{ image.base64_string }}" class="user-photo">
       </li>
     </ul>
   </div>
