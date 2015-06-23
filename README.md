@@ -10,6 +10,7 @@ For the necessary packages, run the following in the root directory:
     >pip install flask peewee flask-bcrypt flask-login
     >bower install
     >npm install
+    >gulp build
 
 To run and debug the server, run in your root (in two separate terminals):
 
