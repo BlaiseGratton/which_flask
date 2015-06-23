@@ -10,6 +10,7 @@ var gulp = require('gulp'),
 
 gulp.task("concatScripts", function() {
     return gulp.src([
+        'bower_components/angular-route/angular-route.min.js',
         'bower_components/angular-local-storage/dist/angular-local-storage.min.js',
         'src/js/app.js',
         'src/js/*.js',

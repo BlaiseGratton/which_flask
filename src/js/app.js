@@ -1,5 +1,5 @@
 'use strict';
-var app = angular.module('whichApp', ['LocalStorageModule']);
+var app = angular.module('whichApp', ['LocalStorageModule', 'ngRoute']);
 
 app.config(['localStorageServiceProvider', '$httpProvider', function(localStorageServiceProvider, $httpProvider) {
   localStorageServiceProvider
