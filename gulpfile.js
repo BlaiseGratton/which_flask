@@ -47,7 +47,7 @@ gulp.task('clean', function() {
   del('static');
 });
 
-gulp.task("build", ['minifyScripts', 'compileSass'], function() {
+gulp.task("build", ['clean', 'minifyScripts', 'compileSass'], function() {
   return gulp.src(["styles/main.css", "js/app.min.js"], { base: './'})
             .pipe(gulp.dest('static'));
 });
