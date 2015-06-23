@@ -1,5 +1,5 @@
 *.pyc
-.gitignore
 *.db
-node_modules
-bower_components
+node_modules/
+bower_components/
+static/

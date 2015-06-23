@@ -1,0 +1,28 @@
+{
+  "name": "which",
+  "version": "0.0.0",
+  "description": "Angular front end, Flask API endpoints for access to a Sqlite database using JWT-based security.",
+  "main": "templates/index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/BlaiseGratton/which_flask.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BlaiseGratton/which_flask/issues"
+  },
+  "homepage": "https://github.com/BlaiseGratton/which_flask",
+  "devDependencies": {
+    "del": "^1.2.0",
+    "gulp": "^3.9.0",
+    "gulp-concat": "^2.5.2",
+    "gulp-rename": "^1.2.2",
+    "gulp-sass": "^2.0.1",
+    "gulp-sourcemaps": "^1.5.2",
+    "gulp-uglify": "^1.2.0"
+  }
+}
