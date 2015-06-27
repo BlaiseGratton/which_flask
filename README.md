@@ -6,7 +6,7 @@ Angular front end, Flask API endpoints for access to a Sqlite database using JWT
 #Installation
 
 For the necessary packages, run the following in the root directory:
-    >easy_install pip # (if you don't have pip installed)
+    >easy_install pip (if you don't have pip installed)
     >pip install flask peewee flask-bcrypt flask-login
     >bower install
     >npm install gulp -g
