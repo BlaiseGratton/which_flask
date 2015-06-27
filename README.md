@@ -10,7 +10,7 @@ For the necessary packages, run the following in the root directory:
     >easy_install pip
     >pip install flask peewee flask-bcrypt flask-login
     >bower install
-    >npm install gulp -g
+    >npm install -g gulp
     >npm install
     >gulp build
 
